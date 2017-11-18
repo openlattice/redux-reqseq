@@ -2,7 +2,7 @@
   "name": "redux-reqseq",
   "version": "0.0.0",
   "homepage": "https://github.com/openlattice/redux-reqseq",
-  "description": "JavaScript SDK for all OpenLattice REST APIs",
+  "description": "",
   "author": {
     "name": "OpenLattice, Inc.",
     "email": "support@openlattice.com",
