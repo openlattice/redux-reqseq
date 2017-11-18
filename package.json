@@ -1,0 +1,124 @@
+{
+  "name": "redux-reqseq",
+  "version": "0.0.0",
+  "homepage": "https://github.com/openlattice/redux-reqseq",
+  "description": "JavaScript SDK for all OpenLattice REST APIs",
+  "author": {
+    "name": "OpenLattice, Inc.",
+    "email": "support@openlattice.com",
+    "url": "https://openlattice.com"
+  },
+  "contributors": [
+    {
+      "name": "Hristo Oskov",
+      "email": "hristo@openlattice.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openlattice/redux-reqseq.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openlattice/redux-reqseq/issues"
+  },
+  "license": "Apache-2.0",
+  "main": "build/reqseq.js",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.0",
+    "babel-loader": "^7.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-flow": "^6.23.0",
+    "better-npm-run": "0.1.0",
+    "bluebird": "^3.4.6",
+    "documentation": "^5.3.0",
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-import-resolver-webpack": "^0.8.3",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-flowtype": "^2.39.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jasmine": "^2.8.0",
+    "flow-bin": "0.57.3",
+    "jasmine": "^2.5.2",
+    "jasmine-core": "^2.5.2",
+    "json-loader": "^0.5.4",
+    "karma": "^1.5.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-jasmine-diff-reporter": "^1.0.0",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-spec-reporter": "0.0.31",
+    "karma-webpack": "^2.0.0",
+    "npm-run-all": "^4.0.0",
+    "phantomjs-prebuilt": "^2.1.13",
+    "rimraf": "2.6.2",
+    "uglifyjs-webpack-plugin": "^1.0.0",
+    "webpack": "^3.8.0",
+    "webpack-dev-server": "^2.9.0"
+  },
+  "scripts": {
+    "build": "better-npm-run build",
+    "build:min": "better-npm-run build:min",
+    "clean": "rimraf build/*",
+    "flow": "flow check",
+    "lib": "better-npm-run webpack-dev-server",
+    "lint": "eslint --config .eslintrc src",
+    "release:major": "npm version major -m \"releasing v%s\" && npm publish",
+    "release:minor": "npm version minor -m \"releasing v%s\" && npm publish",
+    "release:patch": "npm version patch -m \"releasing v%s\" && npm publish",
+    "preversion": "npm-run-all lint test",
+    "version": "npm-run-all clean --parallel build build:min && git add -A package.json build/",
+    "postversion": "git push && git push --tags",
+    "test": "better-npm-run test",
+    "test:karma:watch": "better-npm-run test:karma:watch",
+    "test:karma:browser": "better-npm-run test:karma:browser"
+  },
+  "betterScripts": {
+    "build": {
+      "command": "webpack --config config/webpack/webpack.config.babel.js",
+      "env": {
+        "BUILD": "production",
+        "MINIMIZE": "false",
+        "TARGET_ENV": "web"
+      }
+    },
+    "build:min": {
+      "command": "webpack --config config/webpack/webpack.config.babel.js",
+      "env": {
+        "BUILD": "production",
+        "MINIMIZE": "true",
+        "TARGET_ENV": "web"
+      }
+    },
+    "test": {
+      "command": "karma start config/karma/karma.config.js",
+      "env": {
+        "BUILD": "test"
+      }
+    },
+    "test:karma:watch": {
+      "command": "karma start config/karma/karma.config.js --singleRun=false --autoWatch=true",
+      "env": {
+        "BUILD": "test"
+      }
+    },
+    "test:karma:browser": {
+      "command": "karma start config/karma/karma.config.js --singleRun=false --autoWatch=true --browsers=Chrome --reporters=kjhtml",
+      "env": {
+        "BUILD": "test"
+      }
+    },
+    "webpack-dev-server": {
+      "command": "webpack-dev-server --config config/webpack/webpack.config.babel.js --port 9000 --content-base build/",
+      "env": {
+        "BUILD": "development"
+      }
+    }
+  }
+}
