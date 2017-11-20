@@ -1,7 +1,3 @@
-/*
- * @flow
- */
-
 /* eslint-disable import/extensions */
 
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
