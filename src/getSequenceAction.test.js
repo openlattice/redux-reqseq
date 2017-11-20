@@ -11,8 +11,8 @@ describe('getSequenceAction', () => {
   });
 
   test('invocation should return an action object', () => {
-    const action = getSequenceAction({}, '123', 'test');
-    expect(action.data).toEqual({});
+    const action = getSequenceAction({ foo: 'bar' }, '123', 'test');
+    expect(action.data).toEqual({ foo: 'bar' });
     expect(action.id).toEqual('123');
     expect(action.type).toEqual('test');
   });
