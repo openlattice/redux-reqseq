@@ -2,7 +2,7 @@
   "name": "redux-reqseq",
   "version": "0.0.0",
   "homepage": "https://github.com/openlattice/redux-reqseq",
-  "description": "JavaScript SDK for all OpenLattice REST APIs",
+  "description": "",
   "author": {
     "name": "OpenLattice, Inc.",
     "email": "support@openlattice.com",
@@ -42,21 +42,9 @@
     "eslint-loader": "^1.9.0",
     "eslint-plugin-flowtype": "^2.39.0",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jasmine": "^2.8.0",
     "flow-bin": "0.57.3",
-    "jasmine": "^2.5.2",
-    "jasmine-core": "^2.5.2",
-    "json-loader": "^0.5.4",
-    "karma": "^1.5.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-jasmine": "^1.0.2",
-    "karma-jasmine-diff-reporter": "^1.0.0",
-    "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-phantomjs-launcher": "^1.0.2",
-    "karma-spec-reporter": "0.0.31",
-    "karma-webpack": "^2.0.0",
+    "jest": "^21.2.1",
     "npm-run-all": "^4.0.0",
-    "phantomjs-prebuilt": "^2.1.13",
     "rimraf": "2.6.2",
     "uglifyjs-webpack-plugin": "^1.0.0",
     "webpack": "^3.8.0",
@@ -75,9 +63,8 @@
     "preversion": "npm-run-all lint test",
     "version": "npm-run-all clean --parallel build build:min && git add -A package.json build/",
     "postversion": "git push && git push --tags",
-    "test": "better-npm-run test",
-    "test:karma:watch": "better-npm-run test:karma:watch",
-    "test:karma:browser": "better-npm-run test:karma:browser"
+    "test": "jest --config config/jest/jest.config.js",
+    "test:watch": "jest --config config/jest/jest.config.js --watch"
   },
   "betterScripts": {
     "build": {
@@ -94,24 +81,6 @@
         "BUILD": "production",
         "MINIMIZE": "true",
         "TARGET_ENV": "web"
-      }
-    },
-    "test": {
-      "command": "karma start config/karma/karma.config.js",
-      "env": {
-        "BUILD": "test"
-      }
-    },
-    "test:karma:watch": {
-      "command": "karma start config/karma/karma.config.js --singleRun=false --autoWatch=true",
-      "env": {
-        "BUILD": "test"
-      }
-    },
-    "test:karma:browser": {
-      "command": "karma start config/karma/karma.config.js --singleRun=false --autoWatch=true --browsers=Chrome --reporters=kjhtml",
-      "env": {
-        "BUILD": "test"
       }
     },
     "webpack-dev-server": {

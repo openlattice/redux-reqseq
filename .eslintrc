@@ -6,12 +6,11 @@
   "parser": "babel-eslint",
   "env": {
     "browser": true,
-    "jasmine": true,
+    "jest": true,
     "node": true
   },
   "plugins": [
-    "flowtype",
-    "jasmine"
+    "flowtype"
   ],
   "settings": {
     "flowtype": {
@@ -81,11 +80,6 @@
       }
     ],
 
-    "import/prefer-default-export": "warn",
-
-    "jasmine/no-focused-tests": "error",
-    "jasmine/no-disabled-tests": "error",
-    "jasmine/no-spec-dupes": ["error", "branch"],
-    "jasmine/no-suite-dupes": ["error", "branch"],
+    "import/prefer-default-export": "warn"
   }
 }
