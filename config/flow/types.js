@@ -18,9 +18,9 @@ declare type SubReducers = {
 };
 
 declare type SequenceAction = {
-  data :Object;
   id :string;
   type :string;
+  value ? :Object;
 };
 
 declare type SequenceActionCreator = (...args :any[]) => SequenceAction;
