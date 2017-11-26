@@ -10,11 +10,29 @@ describe('getSequenceAction', () => {
     expect(getSequenceAction).toBeInstanceOf(Function);
   });
 
-  test('invocation should return an action object', () => {
-    const action = getSequenceAction({ foo: 'bar' }, '123', 'test');
-    expect(action.data).toEqual({ foo: 'bar' });
+  test('should return an action object', () => {
+    const action = getSequenceAction('123', 'test', { foo: 'bar' });
     expect(action.id).toEqual('123');
     expect(action.type).toEqual('test');
+    expect(action.value).toEqual({ foo: 'bar' });
+  });
+
+  test('should return an action object without a "value" property when the given value is null or undefined', () => {
+
+    let action = getSequenceAction('123', 'test');
+    expect(action.id).toEqual('123');
+    expect(action.type).toEqual('test');
+    expect(action.value).toBeUndefined();
+
+    action = getSequenceAction('123', 'test', null);
+    expect(action.id).toEqual('123');
+    expect(action.type).toEqual('test');
+    expect(action.value).toBeUndefined();
+
+    action = getSequenceAction('123', 'test', undefined);
+    expect(action.id).toEqual('123');
+    expect(action.type).toEqual('test');
+    expect(action.value).toBeUndefined();
   });
 
 });
