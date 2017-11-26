@@ -1,6 +1,6 @@
 /*!
  * 
- * redux-reqseq - v0.0.2
+ * redux-reqseq - v0.0.3
  * 
  * https://github.com/openlattice/redux-reqseq
  * 
@@ -130,7 +130,7 @@ var _actionTypes = __webpack_require__(0);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // injected by Webpack.DefinePlugin
-var version = "v0.0.2";
+var version = "v0.0.3";
 
 exports.REQUEST = _actionTypes.REQUEST;
 exports.SUCCESS = _actionTypes.SUCCESS;
@@ -195,35 +195,35 @@ function newRequestSequence(baseType) {
   var triggerActionCreator = function triggerActionCreator(data) {
     triggerCallCount += 1;
     sequenceIds[triggerCallCount] = (0, _utils.randomId)();
-    return (0, _getSequenceAction2.default)(data, sequenceIds[triggerCallCount], baseType);
+    return (0, _getSequenceAction2.default)(sequenceIds[triggerCallCount], baseType, data);
   };
 
   var requestActionCreator = function requestActionCreator(data) {
     if (requestCallCount + 1 === triggerCallCount) {
       requestCallCount += 1;
     }
-    return (0, _getSequenceAction2.default)(data, sequenceIds[requestCallCount], requestSequenceActionType);
+    return (0, _getSequenceAction2.default)(sequenceIds[requestCallCount], requestSequenceActionType, data);
   };
 
   var successActionCreator = function successActionCreator(data) {
     if (successCallCount + 1 === triggerCallCount) {
       successCallCount += 1;
     }
-    return (0, _getSequenceAction2.default)(data, sequenceIds[successCallCount], successSequenceActionType);
+    return (0, _getSequenceAction2.default)(sequenceIds[successCallCount], successSequenceActionType, data);
   };
 
   var failureActionCreator = function failureActionCreator(data) {
     if (failureCallCount + 1 === triggerCallCount) {
       failureCallCount += 1;
     }
-    return (0, _getSequenceAction2.default)(data, sequenceIds[failureCallCount], failureSequenceActionType);
+    return (0, _getSequenceAction2.default)(sequenceIds[failureCallCount], failureSequenceActionType, data);
   };
 
   var finallyActionCreator = function finallyActionCreator(data) {
     if (finallyCallCount + 1 === triggerCallCount) {
       finallyCallCount += 1;
     }
-    return (0, _getSequenceAction2.default)(data, sequenceIds[finallyCallCount], finallySequenceActionType);
+    return (0, _getSequenceAction2.default)(sequenceIds[finallyCallCount], finallySequenceActionType, data);
   };
 
   triggerActionCreator.REQUEST = requestSequenceActionType;
@@ -254,16 +254,20 @@ function newRequestSequence(baseType) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 exports.default = getSequenceAction;
-function getSequenceAction(data, id, type) {
+function getSequenceAction(id, type, value) {
+
+  if (value === null || value === undefined) {
+    return {
+      id: id,
+      type: type
+    };
+  }
 
   return {
     id: id,
     type: type,
-    data: _extends({}, data)
+    value: value
   };
 }
 
