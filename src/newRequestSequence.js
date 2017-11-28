@@ -23,38 +23,38 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
 
   const sequenceIds :{[key :number] :string} = {};
 
-  const triggerActionCreator :SequenceActionCreator = (data :any) :SequenceAction => {
+  const triggerActionCreator :SequenceActionCreator = (value :mixed) :SequenceAction => {
     triggerCallCount += 1;
     sequenceIds[triggerCallCount] = randomId();
-    return getSequenceAction(sequenceIds[triggerCallCount], baseType, data);
+    return getSequenceAction(sequenceIds[triggerCallCount], baseType, value);
   };
 
-  const requestActionCreator :SequenceActionCreator = (data :any) :SequenceAction => {
+  const requestActionCreator :SequenceActionCreator = (value :mixed) :SequenceAction => {
     if (requestCallCount + 1 === triggerCallCount) {
       requestCallCount += 1;
     }
-    return getSequenceAction(sequenceIds[requestCallCount], requestSequenceActionType, data);
+    return getSequenceAction(sequenceIds[requestCallCount], requestSequenceActionType, value);
   };
 
-  const successActionCreator :SequenceActionCreator = (data :any) :SequenceAction => {
+  const successActionCreator :SequenceActionCreator = (value :mixed) :SequenceAction => {
     if (successCallCount + 1 === triggerCallCount) {
       successCallCount += 1;
     }
-    return getSequenceAction(sequenceIds[successCallCount], successSequenceActionType, data);
+    return getSequenceAction(sequenceIds[successCallCount], successSequenceActionType, value);
   };
 
-  const failureActionCreator :SequenceActionCreator = (data :any) :SequenceAction => {
+  const failureActionCreator :SequenceActionCreator = (value :mixed) :SequenceAction => {
     if (failureCallCount + 1 === triggerCallCount) {
       failureCallCount += 1;
     }
-    return getSequenceAction(sequenceIds[failureCallCount], failureSequenceActionType, data);
+    return getSequenceAction(sequenceIds[failureCallCount], failureSequenceActionType, value);
   };
 
-  const finallyActionCreator :SequenceActionCreator = (data :any) :SequenceAction => {
+  const finallyActionCreator :SequenceActionCreator = (value :mixed) :SequenceAction => {
     if (finallyCallCount + 1 === triggerCallCount) {
       finallyCallCount += 1;
     }
-    return getSequenceAction(sequenceIds[finallyCallCount], finallySequenceActionType, data);
+    return getSequenceAction(sequenceIds[finallyCallCount], finallySequenceActionType, value);
   };
 
   triggerActionCreator.REQUEST = requestSequenceActionType;
