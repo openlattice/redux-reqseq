@@ -1,6 +1,6 @@
 /*!
  * 
- * redux-reqseq - v0.0.3
+ * redux-reqseq - v0.0.4
  * 
  * https://github.com/openlattice/redux-reqseq
  * 
@@ -130,7 +130,7 @@ var _actionTypes = __webpack_require__(0);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // injected by Webpack.DefinePlugin
-var version = "v0.0.3";
+var version = "v0.0.4";
 
 exports.REQUEST = _actionTypes.REQUEST;
 exports.SUCCESS = _actionTypes.SUCCESS;
