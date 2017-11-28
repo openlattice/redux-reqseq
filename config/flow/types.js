@@ -20,7 +20,7 @@ declare type SubReducers = {
 declare type SequenceAction = {
   id :string;
   type :string;
-  value ? :Object;
+  value ? :mixed;
 };
 
 declare type SequenceActionCreator = (...args :any[]) => SequenceAction;
