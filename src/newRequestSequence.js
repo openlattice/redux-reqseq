@@ -6,7 +6,19 @@ import getSequenceAction from './getSequenceAction';
 import getSequenceReducer from './getSequenceReducer';
 import getSwitchCaseMatcher from './getSwitchCaseMatcher';
 import { REQUEST, SUCCESS, FAILURE, FINALLY } from './actionTypes';
-import { randomId } from './utils';
+import {
+  STRING_TAG,
+  randomId
+} from './utils/utils';
+
+/*
+ * TODO: need logger
+ */
+
+function isValidId(value :any) :boolean {
+
+  return Object.prototype.toString.call(value) === STRING_TAG && value.length > 0;
+}
 
 export default function newRequestSequence(baseType :string) :RequestSequence {
 
@@ -15,46 +27,62 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
   const failureSequenceActionType :string = `${baseType}/${FAILURE}`.toUpperCase();
   const finallySequenceActionType :string = `${baseType}/${FINALLY}`.toUpperCase();
 
-  let triggerCallCount :number = 0;
-  let requestCallCount :number = 0;
-  let successCallCount :number = 0;
-  let failureCallCount :number = 0;
-  let finallyCallCount :number = 0;
+  const sequences :{[key :string] :Object} = {};
 
-  const sequenceIds :{[key :number] :string} = {};
-
-  const triggerActionCreator :SequenceActionCreator = (value :mixed) :SequenceAction => {
-    triggerCallCount += 1;
-    sequenceIds[triggerCallCount] = randomId();
-    return getSequenceAction(sequenceIds[triggerCallCount], baseType, value);
+  const triggerActionCreator :SequenceActionCreator = (triggerValue :any) :SequenceAction => {
+    const id :string = randomId();
+    sequences[id] = {
+      requestCalled: false,
+      successCalled: false,
+      failureCalled: false,
+      request: (requestValue :any) => getSequenceAction(id, requestSequenceActionType, requestValue),
+      success: (successValue :any) => getSequenceAction(id, successSequenceActionType, successValue),
+      failure: (failureValue :any) => getSequenceAction(id, failureSequenceActionType, failureValue),
+      finally: (finallyValue :any) => getSequenceAction(id, finallySequenceActionType, finallyValue)
+    };
+    return getSequenceAction(id, baseType, triggerValue);
   };
 
-  const requestActionCreator :SequenceActionCreator = (value :mixed) :SequenceAction => {
-    if (requestCallCount + 1 === triggerCallCount) {
-      requestCallCount += 1;
+  const requestActionCreator :SequenceActionCreator = (id :string, value :any) :SequenceAction => {
+    if (!isValidId(id) || !sequences[id]) {
+      throw new Error('request() has been called with an invalid id');
     }
-    return getSequenceAction(sequenceIds[requestCallCount], requestSequenceActionType, value);
+    if (sequences[id].requestCalled === true) {
+      throw new Error('request() has already been called');
+    }
+    sequences[id].requestCalled = true;
+    return sequences[id].request(value);
   };
 
-  const successActionCreator :SequenceActionCreator = (value :mixed) :SequenceAction => {
-    if (successCallCount + 1 === triggerCallCount) {
-      successCallCount += 1;
+  const successActionCreator :SequenceActionCreator = (id :string, value :any) :SequenceAction => {
+    if (!isValidId(id) || !sequences[id]) {
+      throw new Error('success() has been called with an invalid id');
     }
-    return getSequenceAction(sequenceIds[successCallCount], successSequenceActionType, value);
+    if (sequences[id].successCalled === true) {
+      throw new Error('success() has already been called');
+    }
+    sequences[id].successCalled = true;
+    return sequences[id].success(value);
   };
 
-  const failureActionCreator :SequenceActionCreator = (value :mixed) :SequenceAction => {
-    if (failureCallCount + 1 === triggerCallCount) {
-      failureCallCount += 1;
+  const failureActionCreator :SequenceActionCreator = (id :string, value :any) :SequenceAction => {
+    if (!isValidId(id) || !sequences[id]) {
+      throw new Error('failure() has been called with an invalid id');
     }
-    return getSequenceAction(sequenceIds[failureCallCount], failureSequenceActionType, value);
+    if (sequences[id].failureCalled === true) {
+      throw new Error('failure() has already been called');
+    }
+    sequences[id].failureCalled = true;
+    return sequences[id].failure(value);
   };
 
-  const finallyActionCreator :SequenceActionCreator = (value :mixed) :SequenceAction => {
-    if (finallyCallCount + 1 === triggerCallCount) {
-      finallyCallCount += 1;
+  const finallyActionCreator :SequenceActionCreator = (id :string, value :any) :SequenceAction => {
+    if (!isValidId(id) || !sequences[id]) {
+      throw new Error('finally() has been called with an invalid id');
     }
-    return getSequenceAction(sequenceIds[finallyCallCount], finallySequenceActionType, value);
+    const sequence = sequences[id];
+    delete sequences[id];
+    return sequence.finally(value);
   };
 
   triggerActionCreator.REQUEST = requestSequenceActionType;
