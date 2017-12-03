@@ -2,7 +2,7 @@
  * @flow
  */
 
-/* eslint-disable import/prefer-default-export */
+const STRING_TAG :string = '[object String]';
 
 function randomId() :string {
 
@@ -12,5 +12,6 @@ function randomId() :string {
 }
 
 export {
+  STRING_TAG,
   randomId
 };
