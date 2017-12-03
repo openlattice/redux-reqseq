@@ -2,6 +2,13 @@
  * @flow
  */
 
+import { STRING_TAG } from './utils/utils';
+
+function isValidType(value :any) :boolean {
+
+  return Object.prototype.toString.call(value) === STRING_TAG && value.length > 0;
+}
+
 export default function getSwitchCaseMatcher(
   baseType :string,
   actionCreator :SequenceActionCreator
@@ -9,12 +16,16 @@ export default function getSwitchCaseMatcher(
 
   return (switchType :string) :string => {
 
-    let parsed :string = '';
-    const slashIndex :number = switchType.lastIndexOf('/');
-    if (slashIndex > 0 && slashIndex < switchType.length) {
-      parsed = switchType.substring(slashIndex + 1);
+    if (!isValidType(switchType)) {
+      return baseType;
     }
 
-    return (actionCreator[parsed] === switchType) ? switchType : baseType;
+    let subType :string = '';
+    const slashIndex :number = switchType.lastIndexOf('/');
+    if (slashIndex > 0 && slashIndex < switchType.length) {
+      subType = switchType.substring(slashIndex + 1);
+    }
+
+    return (actionCreator[subType] === `${baseType}/${subType}`) ? switchType : baseType;
   };
 }

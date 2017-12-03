@@ -2,7 +2,7 @@
  * @flow
  */
 
-export default function getSequenceAction(id :string, type :string, value :?mixed) :SequenceAction {
+export default function getSequenceAction(id :string, type :string, value :any) :SequenceAction {
 
   if (value === null || value === undefined) {
     return {
