@@ -26,6 +26,6 @@ export default function getSwitchCaseMatcher(
       subType = switchType.substring(slashIndex + 1);
     }
 
-    return (actionCreator[subType] === `${baseType}/${subType}`) ? switchType : baseType;
+    return (actionCreator[subType] === switchType) ? switchType : baseType;
   };
 }

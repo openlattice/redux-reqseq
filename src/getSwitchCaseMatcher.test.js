@@ -46,6 +46,7 @@ describe('getSwitchCaseMatcher', () => {
 
     const matcher = getSwitchCaseMatcher(baseType, mockActionCreator);
     expect(matcher(switchType)).toEqual(switchType);
+    expect(matcher(`__TEST__/${subType}`)).toEqual(baseType);
   });
 
 });
