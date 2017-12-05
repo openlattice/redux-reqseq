@@ -1,6 +1,6 @@
 /*!
  * 
- * redux-reqseq - v0.1.0
+ * redux-reqseq - v0.1.1
  * 
  * https://github.com/openlattice/redux-reqseq
  * 
@@ -152,7 +152,7 @@ var _actionTypes = __webpack_require__(0);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // injected by Webpack.DefinePlugin
-var version = "v0.1.0";
+var version = "v0.1.1";
 
 exports.REQUEST = _actionTypes.REQUEST;
 exports.SUCCESS = _actionTypes.SUCCESS;
@@ -415,7 +415,7 @@ function getSwitchCaseMatcher(baseType, actionCreator) {
       subType = switchType.substring(slashIndex + 1);
     }
 
-    return actionCreator[subType] === baseType + '/' + subType ? switchType : baseType;
+    return actionCreator[subType] === switchType ? switchType : baseType;
   };
 }
 
