@@ -1,18 +1,17 @@
 {
+  "parser": "babel-eslint",
   "extends": [
     "airbnb-base",
     "plugin:flowtype/recommended"
   ],
-  "parser": "babel-eslint",
+    "plugins": [
+      "flowtype",
+      "jest"
+    ],
   "env": {
     "browser": true,
     "jest": true,
-    "node": true
   },
-  "plugins": [
-    "flowtype",
-    "jest"
-  ],
   "settings": {
     "flowtype": {
       "onlyFilesWithFlowAnnotation": true
@@ -67,6 +66,7 @@
       }
     ],
     "padded-blocks": "off",
+    "prefer-destructuring": "warn",
     "space-before-function-paren": ["error", "never"],
 
     "flowtype/define-flow-type": "error",
@@ -74,10 +74,19 @@
     "flowtype/space-before-type-colon": ["error", "always"],
     "flowtype/no-types-missing-file-annotation": "warn",
 
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "config/**",
+          "**/*.test.js"
+        ]
+      }
+    ],
     "import/order": [
       "warn",
       {
-        "groups": ["builtin", "external", "internal", ["sibling", "parent"], "index"]
+        "groups": ["builtin", "external", "internal", ["parent", "sibling"], "index"]
       }
     ],
 

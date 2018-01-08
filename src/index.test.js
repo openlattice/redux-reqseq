@@ -20,7 +20,7 @@ import {
   version
 } from './index';
 
-describe('RequestSequence library export', () => {
+describe('redux-reqseq library export', () => {
 
   test(`should export ${REQUEST_ACTION_TYPE}`, () => {
     expect(REQUEST).toEqual(REQUEST_ACTION_TYPE);
