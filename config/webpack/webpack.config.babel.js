@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
-import webpack from 'webpack';
+import Webpack from 'webpack';
 
 import PACKAGE from '../../package.json';
 
@@ -35,12 +35,12 @@ export default function webpackConfig() {
    * plugins
    */
 
-  const BANNER_PLUGIN = new webpack.BannerPlugin({
+  const BANNER_PLUGIN = new Webpack.BannerPlugin({
     banner: LIB_CONFIG.BANNER,
     entryOnly: true
   });
 
-  const DEFINE_PLUGIN = new webpack.DefinePlugin({
+  const DEFINE_PLUGIN = new Webpack.DefinePlugin({
     __DEV__: JSON.stringify(isDev),
     __PROD__: JSON.stringify(isProd),
     __TEST__: JSON.stringify(isTest),
