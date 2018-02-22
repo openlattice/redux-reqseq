@@ -6,10 +6,7 @@ import getSequenceAction from './getSequenceAction';
 import getSequenceReducer from './getSequenceReducer';
 import getSwitchCaseMatcher from './getSwitchCaseMatcher';
 import { REQUEST, SUCCESS, FAILURE, FINALLY } from './actionTypes';
-import {
-  STRING_TAG,
-  randomId
-} from './utils/utils';
+import { STRING_TAG, randomId } from './utils/utils';
 
 /*
  * TODO: need logger
@@ -103,6 +100,4 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
   return (triggerActionCreator :any);
 }
 
-export type {
-  RequestSequence
-};
+export type { RequestSequence };
