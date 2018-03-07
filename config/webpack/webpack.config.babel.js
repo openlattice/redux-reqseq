@@ -1,6 +1,5 @@
 /* eslint-disable import/extensions */
 
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import Webpack from 'webpack';
 
 import PACKAGE from '../../package.json';
@@ -10,6 +9,7 @@ import LIB_PATHS from '../lib/paths.config.js';
 
 import {
   TARGET_ENV,
+  ifDev,
   ifMin,
   isDev,
   isProd,
@@ -47,8 +47,6 @@ export default function webpackConfig() {
     __VERSION__: JSON.stringify(`v${PACKAGE.version}`)
   });
 
-  const UGLIFY_PLUGIN = new UglifyJsPlugin();
-
   /*
    * base webpack config
    */
@@ -58,10 +56,14 @@ export default function webpackConfig() {
     entry: [
       LIB_PATHS.ENTRY
     ],
+    mode: ifDev('development', 'production'),
     module: {
       rules: [
         BABEL_LOADER
       ]
+    },
+    optimization: {
+      minimize: ifMin(true, false)
     },
     output: {
       library: LIB_CONFIG.LIB_NAMESPACE,
@@ -73,14 +75,12 @@ export default function webpackConfig() {
         `${LIB_CONFIG.LIB_FILE_NAME}.js`
       )
     },
-
     performance: {
       hints: false // disable performance hints for now
     },
     plugins: [
       DEFINE_PLUGIN,
-      BANNER_PLUGIN,
-      ...ifMin([UGLIFY_PLUGIN], [])
+      BANNER_PLUGIN
     ],
     resolve: {
       extensions: ['.js'],
