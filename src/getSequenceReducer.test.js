@@ -3,8 +3,13 @@
  */
 
 import getSequenceReducer from './getSequenceReducer';
-import { REQUEST, SUCCESS, FAILURE, FINALLY } from './actionTypes';
 import { randomId } from './utils/utils';
+import {
+  REQUEST,
+  SUCCESS,
+  FAILURE,
+  FINALLY
+} from './actionTypes';
 
 import {
   testShouldInvokeCorrectSubReducer,
