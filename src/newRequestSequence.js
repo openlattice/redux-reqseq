@@ -5,8 +5,13 @@
 import getSequenceAction from './getSequenceAction';
 import getSequenceReducer from './getSequenceReducer';
 import getSwitchCaseMatcher from './getSwitchCaseMatcher';
-import { REQUEST, SUCCESS, FAILURE, FINALLY } from './actionTypes';
 import { STRING_TAG, randomId } from './utils/utils';
+import {
+  REQUEST,
+  SUCCESS,
+  FAILURE,
+  FINALLY
+} from './actionTypes';
 
 /*
  * TODO: need logger
