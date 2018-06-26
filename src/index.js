@@ -3,7 +3,12 @@
  */
 
 import newRequestSequence from './newRequestSequence';
-import { REQUEST, SUCCESS, FAILURE, FINALLY } from './actionTypes';
+import {
+  REQUEST,
+  SUCCESS,
+  FAILURE,
+  FINALLY
+} from './actionTypes';
 
 // injected by Webpack.DefinePlugin
 declare var __VERSION__ :string;

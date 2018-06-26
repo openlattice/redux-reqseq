@@ -2,7 +2,12 @@
  * @flow
  */
 
-import { REQUEST, SUCCESS, FAILURE, FINALLY } from './actionTypes';
+import {
+  REQUEST,
+  SUCCESS,
+  FAILURE,
+  FINALLY
+} from './actionTypes';
 
 export default function getSequenceReducer(baseType :string) :SequenceReducer {
 
