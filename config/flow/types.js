@@ -18,8 +18,8 @@ declare type SubReducers = {
 };
 
 declare type SequenceAction = {
-  id :string;
-  type :string;
+  +id :string;
+  +type :string;
   value ? :any;
 };
 
@@ -32,11 +32,11 @@ declare type RequestSequence = {
   SUCCESS :'SUCCESS';
   FAILURE :'FAILURE';
   FINALLY :'FINALLY';
+  [[call]] :SequenceActionCreator;
   request :SequenceActionCreator;
   success :SequenceActionCreator;
   failure :SequenceActionCreator;
   finally :SequenceActionCreator;
-  $call :SequenceActionCreator;
   case :SwitchCaseMatcher;
   reducer :SequenceReducer;
 };
