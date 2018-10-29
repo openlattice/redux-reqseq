@@ -3,18 +3,23 @@
  */
 
 import getSequenceReducer from './getSequenceReducer';
-import { REQUEST, SUCCESS, FAILURE, FINALLY } from './actionTypes';
-import { randomId } from './utils/utils';
+import { randomStringId } from './utils/utils';
+import {
+  REQUEST,
+  SUCCESS,
+  FAILURE,
+  FINALLY,
+} from './actionTypes';
 
 import {
   testShouldInvokeCorrectSubReducer,
-  testShouldThrowOnInvalidSubReducer
+  testShouldThrowOnInvalidSubReducer,
 } from './utils/tests';
 
 const REQ_SEQ :'REQ_SEQ' = 'REQ_SEQ';
 
 const MOCK_INITIAL_STATE = {
-  id: randomId(),
+  id: randomStringId(),
   hello: 'world',
   list: [1, 2, 3],
   obj: {
@@ -35,7 +40,7 @@ describe('getSequenceReducer', () => {
   describe(`${REQUEST} sub-reducer`, () => {
 
     const state = {};
-    const action = { id: randomId(), type: `${REQ_SEQ}/${REQUEST}` };
+    const action = { id: randomStringId(), type: `${REQ_SEQ}/${REQUEST}` };
     const seqReducer = getSequenceReducer(REQ_SEQ);
 
     testShouldThrowOnInvalidSubReducer(seqReducer, state, action, REQUEST);
@@ -45,7 +50,7 @@ describe('getSequenceReducer', () => {
   describe(`${SUCCESS} sub-reducer`, () => {
 
     const state = {};
-    const action = { id: randomId(), type: `${REQ_SEQ}/${SUCCESS}` };
+    const action = { id: randomStringId(), type: `${REQ_SEQ}/${SUCCESS}` };
     const seqReducer = getSequenceReducer(REQ_SEQ);
 
     testShouldThrowOnInvalidSubReducer(seqReducer, state, action, SUCCESS);
@@ -55,7 +60,7 @@ describe('getSequenceReducer', () => {
   describe(`${FAILURE} sub-reducer`, () => {
 
     const state = {};
-    const action = { id: randomId(), type: `${REQ_SEQ}/${FAILURE}` };
+    const action = { id: randomStringId(), type: `${REQ_SEQ}/${FAILURE}` };
     const seqReducer = getSequenceReducer(REQ_SEQ);
 
     testShouldThrowOnInvalidSubReducer(seqReducer, state, action, FAILURE);
@@ -65,7 +70,7 @@ describe('getSequenceReducer', () => {
   describe(`${FINALLY} sub-reducer`, () => {
 
     const state = {};
-    const action = { id: randomId(), type: `${REQ_SEQ}/${FINALLY}` };
+    const action = { id: randomStringId(), type: `${REQ_SEQ}/${FINALLY}` };
     const seqReducer = getSequenceReducer(REQ_SEQ);
 
     testShouldThrowOnInvalidSubReducer(seqReducer, state, action, FINALLY);
@@ -88,7 +93,7 @@ describe('getSequenceReducer', () => {
 
     test('should return given state if sub-reducer action type does not match', () => {
 
-      const action = { id: randomId(), type: '__TEST__' };
+      const action = { id: randomStringId(), type: '__TEST__', value: {} };
       const seqReducer = getSequenceReducer(REQ_SEQ);
       const newState = seqReducer(MOCK_INITIAL_STATE, action, {
         [REQUEST]: mockRequestReducer,
@@ -106,7 +111,7 @@ describe('getSequenceReducer', () => {
 
     test(`should return given state if ${REQUEST} sub-reducer is missing`, () => {
 
-      const action = { id: randomId(), type: `${REQ_SEQ}/${REQUEST}` };
+      const action = { id: randomStringId(), type: `${REQ_SEQ}/${REQUEST}`, value: {} };
       const seqReducer = getSequenceReducer(REQ_SEQ);
       const newState = seqReducer(MOCK_INITIAL_STATE, action, {
         [SUCCESS]: mockSuccessReducer,
@@ -122,7 +127,7 @@ describe('getSequenceReducer', () => {
 
     test(`should return given state if ${SUCCESS} sub-reducer is missing`, () => {
 
-      const action = { id: randomId(), type: `${REQ_SEQ}/${SUCCESS}` };
+      const action = { id: randomStringId(), type: `${REQ_SEQ}/${SUCCESS}`, value: {} };
       const seqReducer = getSequenceReducer(REQ_SEQ);
       const newState = seqReducer(MOCK_INITIAL_STATE, action, {
         [REQUEST]: mockRequestReducer,
@@ -138,7 +143,7 @@ describe('getSequenceReducer', () => {
 
     test(`should return given state if ${FAILURE} sub-reducer is missing`, () => {
 
-      const action = { id: randomId(), type: `${REQ_SEQ}/${FAILURE}` };
+      const action = { id: randomStringId(), type: `${REQ_SEQ}/${FAILURE}`, value: {} };
       const seqReducer = getSequenceReducer(REQ_SEQ);
       const newState = seqReducer(MOCK_INITIAL_STATE, action, {
         [REQUEST]: mockRequestReducer,
@@ -154,7 +159,7 @@ describe('getSequenceReducer', () => {
 
     test(`should return given state if ${FINALLY} sub-reducer is missing`, () => {
 
-      const action = { id: randomId(), type: `${REQ_SEQ}/${FINALLY}` };
+      const action = { id: randomStringId(), type: `${REQ_SEQ}/${FINALLY}`, value: {} };
       const seqReducer = getSequenceReducer(REQ_SEQ);
       const newState = seqReducer(MOCK_INITIAL_STATE, action, {
         [REQUEST]: mockRequestReducer,

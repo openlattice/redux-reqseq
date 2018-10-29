@@ -1,24 +1,17 @@
-/*
- * @flow
- */
+const path = require('path');
 
-/* eslint-disable import/extensions */
+const BUILD = 'build';
+const NODE = 'node_modules';
+const SOURCE = 'src';
 
-import path from 'path';
+const ROOT = path.resolve(__dirname, '../..');
 
-import LIB_CONFIG from './lib.config.js';
-
-const ROOT :string = path.resolve(__dirname, '../..');
-
-const BUILD :string = path.resolve(ROOT, 'build');
-const NODE :string = path.resolve(ROOT, 'node_modules');
-const SOURCE :string = path.resolve(ROOT, 'src');
-
-const ENTRY :string = path.resolve(SOURCE, LIB_CONFIG.ENTRY_FILE_NAME);
-
-export default {
-  BUILD,
-  ENTRY,
-  NODE,
-  SOURCE
+module.exports = {
+  ABS: {
+    BUILD: path.resolve(ROOT, BUILD),
+    ENTRY: path.resolve(ROOT, `${SOURCE}/index.js`),
+    NODE: path.resolve(ROOT, NODE),
+    SOURCE: path.resolve(ROOT, SOURCE),
+  },
+  REL: {},
 };

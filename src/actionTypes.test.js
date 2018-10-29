@@ -2,7 +2,12 @@
  * @flow
  */
 
-import { REQUEST, SUCCESS, FAILURE, FINALLY } from './actionTypes';
+import {
+  REQUEST,
+  SUCCESS,
+  FAILURE,
+  FINALLY,
+} from './actionTypes';
 
 const REQUEST_ACTION_TYPE :'REQUEST' = 'REQUEST';
 const SUCCESS_ACTION_TYPE :'SUCCESS' = 'SUCCESS';

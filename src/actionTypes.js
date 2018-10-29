@@ -11,5 +11,5 @@ export {
   REQUEST,
   SUCCESS,
   FAILURE,
-  FINALLY
+  FINALLY,
 };

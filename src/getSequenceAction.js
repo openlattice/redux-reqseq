@@ -7,13 +7,14 @@ export default function getSequenceAction(id :string, type :string, value :any) 
   if (value === null || value === undefined) {
     return {
       id,
-      type
+      type,
+      value: {},
     };
   }
 
   return {
     id,
     type,
-    value
+    value,
   };
 }

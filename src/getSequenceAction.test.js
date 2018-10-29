@@ -17,22 +17,22 @@ describe('getSequenceAction', () => {
     expect(action.value).toEqual({ foo: 'bar' });
   });
 
-  test('should return an action object without a "value" property when the given value is null or undefined', () => {
+  test('should return an action object with "value" = {} property when the given value is null or undefined', () => {
 
     let action = getSequenceAction('123', 'test');
     expect(action.id).toEqual('123');
     expect(action.type).toEqual('test');
-    expect(action.value).toBeUndefined();
+    expect(action.value).toEqual({});
 
     action = getSequenceAction('123', 'test', null);
     expect(action.id).toEqual('123');
     expect(action.type).toEqual('test');
-    expect(action.value).toBeUndefined();
+    expect(action.value).toEqual({});
 
     action = getSequenceAction('123', 'test', undefined);
     expect(action.id).toEqual('123');
     expect(action.type).toEqual('test');
-    expect(action.value).toBeUndefined();
+    expect(action.value).toEqual({});
   });
 
 });

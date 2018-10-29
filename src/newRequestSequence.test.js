@@ -2,9 +2,13 @@
  * @flow
  */
 import newRequestSequence from './newRequestSequence';
-import { REQUEST, SUCCESS, FAILURE, FINALLY } from './actionTypes';
-
 import { INVALID_PARAMS } from './utils/invalid';
+import {
+  REQUEST,
+  SUCCESS,
+  FAILURE,
+  FINALLY
+} from './actionTypes';
 
 const REQ_SEQ :'REQ_SEQ' = 'REQ_SEQ';
 
@@ -54,6 +58,16 @@ describe('newRequestSequence', () => {
 
     test(`should have ${FINALLY.toLowerCase()}`, () => {
       expect(reqseq.finally).toBeInstanceOf(Function);
+    });
+
+  });
+
+  describe('RequestSequence functions should have the base type', () => {
+
+    const reqseq = newRequestSequence(REQ_SEQ);
+
+    test('should have baseType', () => {
+      expect(reqseq.baseType).toEqual(REQ_SEQ);
     });
 
   });
