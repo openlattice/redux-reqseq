@@ -62,6 +62,16 @@ describe('newRequestSequence', () => {
 
   });
 
+  describe('RequestSequence functions should have the base type', () => {
+
+    const reqseq = newRequestSequence(REQ_SEQ);
+
+    test('should have baseType', () => {
+      expect(reqseq.baseType).toEqual(REQ_SEQ);
+    });
+
+  });
+
   describe('RequestSequence functions should have helper functions', () => {
 
     const reqseq = newRequestSequence(REQ_SEQ);
