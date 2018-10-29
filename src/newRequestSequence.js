@@ -5,12 +5,12 @@
 import getSequenceAction from './getSequenceAction';
 import getSequenceReducer from './getSequenceReducer';
 import getSwitchCaseMatcher from './getSwitchCaseMatcher';
-import { STRING_TAG, randomId } from './utils/utils';
+import { STRING_TAG, randomStringId } from './utils/utils';
 import {
   REQUEST,
   SUCCESS,
   FAILURE,
-  FINALLY
+  FINALLY,
 } from './actionTypes';
 
 /*
@@ -32,7 +32,7 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
   const sequences :{[key :string] :Object} = {};
 
   const triggerActionCreator :SequenceActionCreator = (triggerValue :any) :SequenceAction => {
-    const id :string = randomId();
+    const id :string = randomStringId();
     sequences[id] = {
       requestCalled: false,
       successCalled: false,
@@ -97,6 +97,7 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
   triggerActionCreator.failure = failureActionCreator;
   triggerActionCreator.finally = finallyActionCreator;
 
+  triggerActionCreator.baseType = baseType;
   triggerActionCreator.case = getSwitchCaseMatcher(baseType, triggerActionCreator);
   triggerActionCreator.reducer = getSequenceReducer(baseType);
 

@@ -4,14 +4,14 @@
 
 import getSwitchCaseMatcher from './getSwitchCaseMatcher';
 import { INVALID_SS_PARAMS } from './utils/invalid';
-import { randomId } from './utils/utils';
+import { randomStringId } from './utils/utils';
 
 function getMockActionCreator() {
   return () => ({
-    id: randomId(),
+    id: randomStringId(),
     type: '__TEST__',
     value: {
-      id: randomId()
+      id: randomStringId()
     }
   });
 }
@@ -23,12 +23,12 @@ describe('getSwitchCaseMatcher', () => {
   });
 
   test('invocation should return a function', () => {
-    expect(getSwitchCaseMatcher(randomId(), getMockActionCreator())).toBeInstanceOf(Function);
+    expect(getSwitchCaseMatcher(randomStringId(), getMockActionCreator())).toBeInstanceOf(Function);
   });
 
   test('should return the given base action type for invalid switch types', () => {
     INVALID_SS_PARAMS.forEach((invalid :any) => {
-      const baseType = randomId();
+      const baseType = randomStringId();
       const matcher = getSwitchCaseMatcher(baseType, getMockActionCreator());
       expect(matcher(invalid)).toEqual(baseType);
       expect(matcher(`${baseType}/${invalid}`)).toEqual(baseType);
@@ -37,8 +37,8 @@ describe('getSwitchCaseMatcher', () => {
 
   test('should return the given switch type if it matches', () => {
 
-    const baseType = randomId();
-    const subType = randomId();
+    const baseType = randomStringId();
+    const subType = randomStringId();
     const switchType = `${baseType}/${subType}`;
 
     const mockActionCreator = getMockActionCreator();

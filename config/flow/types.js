@@ -20,7 +20,7 @@ declare type SubReducers = {
 declare type SequenceAction = {
   +id :string;
   +type :string;
-  value ? :any;
+  +value :any;
 };
 
 declare type SequenceActionCreator = (...args :any[]) => SequenceAction;
@@ -37,6 +37,7 @@ declare type RequestSequence = {
   success :SequenceActionCreator;
   failure :SequenceActionCreator;
   finally :SequenceActionCreator;
+  baseType :string;
   case :SwitchCaseMatcher;
   reducer :SequenceReducer;
 };
