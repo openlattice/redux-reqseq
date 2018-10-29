@@ -1,6 +1,6 @@
 {
   "name": "redux-reqseq",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "homepage": "https://github.com/openlattice/redux-reqseq",
   "description": "JavaScript library for request sequence lifecycles in redux",
   "author": {
