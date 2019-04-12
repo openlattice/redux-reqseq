@@ -1,6 +1,7 @@
 /*
  * @flow
  */
+
 import newRequestSequence from './newRequestSequence';
 import { INVALID_PARAMS } from './utils/invalid';
 import {
