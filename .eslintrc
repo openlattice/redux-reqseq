@@ -4,10 +4,10 @@
     "airbnb-base",
     "plugin:flowtype/recommended"
   ],
-    "plugins": [
-      "flowtype",
-      "jest"
-    ],
+  "plugins": [
+    "flowtype",
+    "jest"
+  ],
   "env": {
     "browser": true,
     "jest": true,
