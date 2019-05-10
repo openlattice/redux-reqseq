@@ -4,6 +4,22 @@
 
 import { INVALID_PARAMS_NOT_DEFINED_ALLOWED } from './invalid';
 
+function testEnumIntegrity(enumToTest :Object, expectedEnum :Object) {
+
+  test('should contain only expected enum values', () => {
+    expect(Object.keys(enumToTest)).toEqual(Object.values(enumToTest));
+    expect(Object.keys(enumToTest)).toEqual(expectedEnum.keySeq().toJS());
+    expect(Object.values(enumToTest)).toEqual(expectedEnum.valueSeq().toJS());
+  });
+
+  expectedEnum.forEach((value) => {
+    test(`should contain "${value}"`, () => {
+      expect(enumToTest).toHaveProperty(value);
+      expect(enumToTest[value]).toEqual(value);
+    });
+  });
+}
+
 function testShouldInvokeCorrectSubReducer(
   sequenceReducer :SequenceReducer,
   state :Object,
@@ -33,6 +49,7 @@ function testShouldThrowOnInvalidSubReducer(
 }
 
 export {
+  testEnumIntegrity,
   testShouldInvokeCorrectSubReducer,
   testShouldThrowOnInvalidSubReducer
 };

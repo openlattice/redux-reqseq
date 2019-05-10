@@ -11,7 +11,7 @@ import {
   SUCCESS,
   FAILURE,
   FINALLY,
-} from './actionTypes';
+} from './ActionTypes';
 
 /*
  * TODO: need logger
@@ -105,5 +105,3 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
   // workaround: typecast to less the specific "any" type
   return (triggerActionCreator :any);
 }
-
-export type { RequestSequence };

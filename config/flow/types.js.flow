@@ -2,8 +2,6 @@
  * @flow
  */
 
-/* eslint-disable no-undef */
-
 declare type SequenceActionType =
   | 'REQUEST'
   | 'SUCCESS'
@@ -11,10 +9,10 @@ declare type SequenceActionType =
   | 'FINALLY';
 
 declare type SubReducers = {
-  REQUEST ? :() => any;
-  SUCCESS ? :() => any;
-  FAILURE ? :() => any;
-  FINALLY ? :() => any;
+  REQUEST ?:() => any;
+  SUCCESS ?:() => any;
+  FAILURE ?:() => any;
+  FINALLY ?:() => any;
 };
 
 declare type SequenceAction = {

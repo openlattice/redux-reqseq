@@ -1,6 +1,7 @@
 /*
  * @flow
  */
+
 import newRequestSequence from './newRequestSequence';
 import { INVALID_PARAMS } from './utils/invalid';
 import {
@@ -8,7 +9,7 @@ import {
   SUCCESS,
   FAILURE,
   FINALLY
-} from './actionTypes';
+} from './ActionTypes';
 
 const REQ_SEQ :'REQ_SEQ' = 'REQ_SEQ';
 

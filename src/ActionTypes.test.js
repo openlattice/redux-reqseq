@@ -7,7 +7,7 @@ import {
   SUCCESS,
   FAILURE,
   FINALLY,
-} from './actionTypes';
+} from './ActionTypes';
 
 const REQUEST_ACTION_TYPE :'REQUEST' = 'REQUEST';
 const SUCCESS_ACTION_TYPE :'SUCCESS' = 'SUCCESS';
