@@ -9,7 +9,7 @@ import {
   SUCCESS,
   FAILURE,
   FINALLY,
-} from './actionTypes';
+} from './ActionTypes';
 
 import {
   testShouldInvokeCorrectSubReducer,

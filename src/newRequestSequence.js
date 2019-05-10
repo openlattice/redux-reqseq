@@ -11,7 +11,7 @@ import {
   SUCCESS,
   FAILURE,
   FINALLY,
-} from './actionTypes';
+} from './ActionTypes';
 
 /*
  * TODO: need logger
