@@ -7,7 +7,7 @@ import {
   SUCCESS,
   FAILURE,
   FINALLY
-} from './actionTypes';
+} from './ActionTypes';
 
 export default function getSequenceReducer(baseType :string) :SequenceReducer {
 

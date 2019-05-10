@@ -1,0 +1,71 @@
+/*
+ * @flow
+ */
+
+declare module "redux-reqseq" {
+
+  declare export type SequenceAction = {
+    +id :string;
+    +type :string;
+    value :any;
+  };
+
+  declare export type SequenceActionCreator = (...args :any[]) => SequenceAction;
+  declare export type SequenceReducer = (state :any, action :SequenceAction, subReducers :SubReducers) => any;
+  declare export type SwitchCaseMatcher = (type :string) => string;
+
+  declare export type RequestSequence = {
+    REQUEST :'REQUEST';
+    SUCCESS :'SUCCESS';
+    FAILURE :'FAILURE';
+    FINALLY :'FINALLY';
+    [[call]] :SequenceActionCreator;
+    request :SequenceActionCreator;
+    success :SequenceActionCreator;
+    failure :SequenceActionCreator;
+    finally :SequenceActionCreator;
+    baseType :string;
+    case :SwitchCaseMatcher;
+    reducer :SequenceReducer;
+  };
+
+  declare export type SubReducers = {
+    REQUEST ?:() => any;
+    SUCCESS ?:() => any;
+    FAILURE ?:() => any;
+    FINALLY ?:() => any;
+  };
+
+  /*
+   *
+   * constants & enums
+   *
+   */
+
+  declare export type RequestStates = {|
+    STANDBY :'STANDBY';
+    PENDING :'PENDING';
+    SUCCESS :'SUCCESS';
+    FAILURE :'FAILURE';
+  |};
+  declare export type RequestState = $Values<RequestStates>;
+
+  declare export type SequenceActionType =
+    | 'REQUEST'
+    | 'SUCCESS'
+    | 'FAILURE'
+    | 'FINALLY';
+
+  /*
+   *
+   * module exports
+   *
+   */
+
+  declare export default {
+    RequestState :RequestState;
+    RequestStates :RequestStates;
+    newRequestSequence :(baseType :string) => RequestSequence;
+    version :string;
+  };
+};
