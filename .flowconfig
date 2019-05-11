@@ -16,4 +16,4 @@
 .*/node_modules/.*
 
 [libs]
-./config/flow
+# ./config/flow

@@ -8,8 +8,10 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
-  FINALLY
+  FINALLY,
 } from './ActionTypes';
+import type { SequenceAction } from './getSequenceAction';
+import type { RequestSequence } from './newRequestSequence';
 
 const REQ_SEQ :'REQ_SEQ' = 'REQ_SEQ';
 

@@ -3,6 +3,7 @@
  */
 
 import { INVALID_PARAMS_NOT_DEFINED_ALLOWED } from './invalid';
+import type { SequenceReducer } from '../getSequenceReducer';
 
 function testEnumIntegrity(enumToTest :Object, expectedEnum :Object) {
 

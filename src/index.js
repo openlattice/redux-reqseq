@@ -18,5 +18,5 @@ export {
 export default {
   RequestStates,
   newRequestSequence,
-  version
+  version,
 };
