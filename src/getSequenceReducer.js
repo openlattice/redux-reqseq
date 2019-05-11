@@ -8,6 +8,16 @@ import {
   FAILURE,
   FINALLY
 } from './ActionTypes';
+import type { SequenceAction } from './getSequenceAction';
+
+type SubReducers = {
+  REQUEST ?:() => any;
+  SUCCESS ?:() => any;
+  FAILURE ?:() => any;
+  FINALLY ?:() => any;
+};
+
+type SequenceReducer = (state :any, action :SequenceAction, subReducers :SubReducers) => any;
 
 export default function getSequenceReducer(baseType :string) :SequenceReducer {
 
@@ -53,3 +63,8 @@ export default function getSequenceReducer(baseType :string) :SequenceReducer {
     return state;
   };
 }
+
+export type {
+  SequenceReducer,
+  SubReducers,
+};

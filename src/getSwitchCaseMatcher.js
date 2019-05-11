@@ -3,6 +3,9 @@
  */
 
 import { STRING_TAG } from './utils/utils';
+import type { SequenceActionCreator } from './getSequenceAction';
+
+type SwitchCaseMatcher = (type :string) => string;
 
 function isValidType(value :any) :boolean {
 
@@ -29,3 +32,7 @@ export default function getSwitchCaseMatcher(
     return (actionCreator[subType] === switchType) ? switchType : baseType;
   };
 }
+
+export type {
+  SwitchCaseMatcher,
+};

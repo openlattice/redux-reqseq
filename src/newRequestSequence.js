@@ -12,6 +12,24 @@ import {
   FAILURE,
   FINALLY,
 } from './ActionTypes';
+import type { SequenceAction, SequenceActionCreator } from './getSequenceAction';
+import type { SwitchCaseMatcher } from './getSwitchCaseMatcher';
+import type { SequenceReducer } from './getSequenceReducer';
+
+type RequestSequence = {
+  REQUEST :'REQUEST';
+  SUCCESS :'SUCCESS';
+  FAILURE :'FAILURE';
+  FINALLY :'FINALLY';
+  (...args :any[]) :SequenceAction;
+  request :SequenceActionCreator;
+  success :SequenceActionCreator;
+  failure :SequenceActionCreator;
+  finally :SequenceActionCreator;
+  baseType :string;
+  case :SwitchCaseMatcher;
+  reducer :SequenceReducer;
+};
 
 /*
  * TODO: need logger
@@ -105,3 +123,7 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
   // workaround: typecast to less the specific "any" type
   return (triggerActionCreator :any);
 }
+
+export type {
+  RequestSequence,
+};

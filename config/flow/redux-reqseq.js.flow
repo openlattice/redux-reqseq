@@ -4,22 +4,35 @@
 
 declare module "redux-reqseq" {
 
+  declare type SequenceActionType =
+    | 'REQUEST'
+    | 'SUCCESS'
+    | 'FAILURE'
+    | 'FINALLY';
+
   declare export type SequenceAction = {
     +id :string;
     +type :string;
     value :any;
   };
 
-  declare export type SequenceActionCreator = (...args :any[]) => SequenceAction;
-  declare export type SequenceReducer = (state :any, action :SequenceAction, subReducers :SubReducers) => any;
-  declare export type SwitchCaseMatcher = (type :string) => string;
+  declare type SubReducers = {
+    REQUEST ?:() => any;
+    SUCCESS ?:() => any;
+    FAILURE ?:() => any;
+    FINALLY ?:() => any;
+  };
+
+  declare type SequenceActionCreator = (...args :any[]) => SequenceAction;
+  declare type SequenceReducer = (state :any, action :SequenceAction, subReducers :SubReducers) => any;
+  declare type SwitchCaseMatcher = (type :string) => string;
 
   declare export type RequestSequence = {
     REQUEST :'REQUEST';
     SUCCESS :'SUCCESS';
     FAILURE :'FAILURE';
     FINALLY :'FINALLY';
-    [[call]] :SequenceActionCreator;
+    (...args :any[]) :SequenceAction;
     request :SequenceActionCreator;
     success :SequenceActionCreator;
     failure :SequenceActionCreator;
@@ -29,43 +42,20 @@ declare module "redux-reqseq" {
     reducer :SequenceReducer;
   };
 
-  declare export type SubReducers = {
-    REQUEST ?:() => any;
-    SUCCESS ?:() => any;
-    FAILURE ?:() => any;
-    FINALLY ?:() => any;
-  };
-
-  /*
-   *
-   * constants & enums
-   *
-   */
-
-  declare export type RequestStates = {|
+  declare export var RequestStates :{|
     STANDBY :'STANDBY';
     PENDING :'PENDING';
     SUCCESS :'SUCCESS';
     FAILURE :'FAILURE';
   |};
-  declare export type RequestState = $Values<RequestStates>;
+  declare export type RequestState = $Values<typeof RequestStates>;
 
-  declare export type SequenceActionType =
-    | 'REQUEST'
-    | 'SUCCESS'
-    | 'FAILURE'
-    | 'FINALLY';
-
-  /*
-   *
-   * module exports
-   *
-   */
+  declare export function newRequestSequence(baseType :string) :RequestSequence;
+  declare export var version :string;
 
   declare export default {
-    RequestState :RequestState;
-    RequestStates :RequestStates;
-    newRequestSequence :(baseType :string) => RequestSequence;
+    RequestStates :typeof RequestStates;
+    newRequestSequence :typeof newRequestSequence;
     version :string;
   };
 };
