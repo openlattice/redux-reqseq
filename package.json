@@ -22,7 +22,7 @@
     "url": "https://github.com/openlattice/redux-reqseq/issues"
   },
   "license": "Apache-2.0",
-  "main": "build/reqseq.js",
+  "main": "src/index.js",
   "dependencies": {},
   "devDependencies": {
     "@babel/cli": "~7.2.0",
