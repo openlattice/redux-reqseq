@@ -1,5 +1,6 @@
 import { Map } from 'immutable';
 
+/* eslint-disable-next-line import/no-named-as-default */
 import RequestStates from './RequestStates';
 import { testEnumIntegrity } from './utils/tests';
 
