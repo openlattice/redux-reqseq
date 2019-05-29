@@ -2,7 +2,6 @@
  * @flow
  */
 
-/* eslint-disable-next-line import/no-named-as-default */
 import RequestStates from './RequestStates';
 import newRequestSequence from './newRequestSequence';
 

@@ -17,10 +17,10 @@ import type { SwitchCaseMatcher } from './getSwitchCaseMatcher';
 import type { SequenceReducer } from './getSequenceReducer';
 
 type RequestSequence = {
-  REQUEST :'REQUEST';
-  SUCCESS :'SUCCESS';
-  FAILURE :'FAILURE';
-  FINALLY :'FINALLY';
+  REQUEST :string;
+  SUCCESS :string;
+  FAILURE :string;
+  FINALLY :string;
   (...args :any[]) :SequenceAction;
   request :SequenceActionCreator;
   success :SequenceActionCreator;
@@ -49,7 +49,7 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
 
   const sequences :{[key :string] :Object} = {};
 
-  const triggerActionCreator :SequenceActionCreator = (triggerValue :any) :SequenceAction => {
+  const triggerActionCreator :RequestSequence = (triggerValue :any) :SequenceAction => {
     const id :string = randomStringId();
     sequences[id] = {
       requestCalled: false,
@@ -119,9 +119,7 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
   triggerActionCreator.case = getSwitchCaseMatcher(baseType, triggerActionCreator);
   triggerActionCreator.reducer = getSequenceReducer(baseType);
 
-  // as of v0.57, FLow doesn't support this use case: https://github.com/facebook/flow/issues/5224
-  // workaround: typecast to less the specific "any" type
-  return (triggerActionCreator :any);
+  return triggerActionCreator;
 }
 
 export type {
