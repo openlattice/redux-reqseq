@@ -2,27 +2,20 @@
  * @flow
  */
 
-type RequestStates = {|
+type RequestStatesEnum = {|
   STANDBY :'STANDBY';
   PENDING :'PENDING';
   SUCCESS :'SUCCESS';
   FAILURE :'FAILURE';
 |};
-type RequestState = $Values<RequestStates>;
+type RequestState = $Values<RequestStatesEnum>;
 
-const RequestStatesEnum :RequestStates = Object.freeze({
+const RequestStates :{| ...RequestStatesEnum |} = Object.freeze({
   STANDBY: 'STANDBY',
   PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
   FAILURE: 'FAILURE',
 });
 
-// NOTE: we are deliberately exporting the enum using the spread operator
-export default {
-  ...RequestStatesEnum
-};
-
-export type {
-  RequestState,
-  RequestStates,
-};
+export default RequestStates;
+export type { RequestState };
