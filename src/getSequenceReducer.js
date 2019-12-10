@@ -16,11 +16,11 @@ type SubReducers = {
   FINALLY ?:() => any;
 };
 
-type SequenceReducer = (state :any, action :{ type :string }, subReducers :SubReducers) => any;
-
 type ActionOrActionType =
   | string
   | { type :string; };
+
+type SequenceReducer = (state :any, action :ActionOrActionType, subReducers :SubReducers) => any;
 
 export default function getSequenceReducer(baseType :string) :SequenceReducer {
 
