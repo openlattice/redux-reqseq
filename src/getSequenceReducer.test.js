@@ -38,42 +38,81 @@ describe('getSequenceReducer', () => {
 
   describe(`${REQUEST} sub-reducer`, () => {
 
-    const state = {};
-    const action = { id: randomStringId(), type: `${REQ_SEQ}/${REQUEST}` };
-    const seqReducer = getSequenceReducer(REQ_SEQ);
+    describe('given an action object', () => {
+      const state = {};
+      const action = { id: randomStringId(), type: `${REQ_SEQ}/${REQUEST}` };
+      const seqReducer = getSequenceReducer(REQ_SEQ);
+      testShouldThrowOnInvalidSubReducer(seqReducer, state, action, REQUEST);
+      testShouldInvokeCorrectSubReducer(seqReducer, state, action, REQUEST);
+    });
 
-    testShouldThrowOnInvalidSubReducer(seqReducer, state, action, REQUEST);
-    testShouldInvokeCorrectSubReducer(seqReducer, state, action, REQUEST);
+    describe('given an action type', () => {
+      const state = {};
+      const actionType = `${REQ_SEQ}/${REQUEST}`;
+      const seqReducer = getSequenceReducer(REQ_SEQ);
+      testShouldThrowOnInvalidSubReducer(seqReducer, state, actionType, REQUEST);
+      testShouldInvokeCorrectSubReducer(seqReducer, state, actionType, REQUEST);
+    });
+
   });
 
   describe(`${SUCCESS} sub-reducer`, () => {
 
-    const state = {};
-    const action = { id: randomStringId(), type: `${REQ_SEQ}/${SUCCESS}` };
-    const seqReducer = getSequenceReducer(REQ_SEQ);
+    describe('given an action object', () => {
+      const state = {};
+      const action = { id: randomStringId(), type: `${REQ_SEQ}/${SUCCESS}` };
+      const seqReducer = getSequenceReducer(REQ_SEQ);
+      testShouldThrowOnInvalidSubReducer(seqReducer, state, action, SUCCESS);
+      testShouldInvokeCorrectSubReducer(seqReducer, state, action, SUCCESS);
+    });
 
-    testShouldThrowOnInvalidSubReducer(seqReducer, state, action, SUCCESS);
-    testShouldInvokeCorrectSubReducer(seqReducer, state, action, SUCCESS);
+    describe('given an action type', () => {
+      const state = {};
+      const actionType = `${REQ_SEQ}/${SUCCESS}`;
+      const seqReducer = getSequenceReducer(REQ_SEQ);
+      testShouldThrowOnInvalidSubReducer(seqReducer, state, actionType, SUCCESS);
+      testShouldInvokeCorrectSubReducer(seqReducer, state, actionType, SUCCESS);
+    });
+
   });
 
   describe(`${FAILURE} sub-reducer`, () => {
 
-    const state = {};
-    const action = { id: randomStringId(), type: `${REQ_SEQ}/${FAILURE}` };
-    const seqReducer = getSequenceReducer(REQ_SEQ);
+    describe('given an action object', () => {
+      const state = {};
+      const action = { id: randomStringId(), type: `${REQ_SEQ}/${FAILURE}` };
+      const seqReducer = getSequenceReducer(REQ_SEQ);
+      testShouldThrowOnInvalidSubReducer(seqReducer, state, action, FAILURE);
+      testShouldInvokeCorrectSubReducer(seqReducer, state, action, FAILURE);
+    });
 
-    testShouldThrowOnInvalidSubReducer(seqReducer, state, action, FAILURE);
-    testShouldInvokeCorrectSubReducer(seqReducer, state, action, FAILURE);
+    describe('given an action type', () => {
+      const state = {};
+      const actionType = `${REQ_SEQ}/${FAILURE}`;
+      const seqReducer = getSequenceReducer(REQ_SEQ);
+      testShouldThrowOnInvalidSubReducer(seqReducer, state, actionType, FAILURE);
+      testShouldInvokeCorrectSubReducer(seqReducer, state, actionType, FAILURE);
+    });
+
   });
 
   describe(`${FINALLY} sub-reducer`, () => {
 
-    const state = {};
-    const action = { id: randomStringId(), type: `${REQ_SEQ}/${FINALLY}` };
-    const seqReducer = getSequenceReducer(REQ_SEQ);
+    describe('given an action object', () => {
+      const state = {};
+      const action = { id: randomStringId(), type: `${REQ_SEQ}/${FINALLY}` };
+      const seqReducer = getSequenceReducer(REQ_SEQ);
+      testShouldThrowOnInvalidSubReducer(seqReducer, state, action, FINALLY);
+      testShouldInvokeCorrectSubReducer(seqReducer, state, action, FINALLY);
+    });
 
-    testShouldThrowOnInvalidSubReducer(seqReducer, state, action, FINALLY);
-    testShouldInvokeCorrectSubReducer(seqReducer, state, action, FINALLY);
+    describe('given an action type', () => {
+      const state = {};
+      const actionType = `${REQ_SEQ}/${FINALLY}`;
+      const seqReducer = getSequenceReducer(REQ_SEQ);
+      testShouldThrowOnInvalidSubReducer(seqReducer, state, actionType, FINALLY);
+      testShouldInvokeCorrectSubReducer(seqReducer, state, actionType, FINALLY);
+    });
   });
 
   describe('default case', () => {
@@ -88,6 +127,25 @@ describe('getSequenceReducer', () => {
       mockSuccessReducer.mockClear();
       mockFailureReducer.mockClear();
       mockFinallyReducer.mockClear();
+    });
+
+    test('should return given state if sub-reducer action type is not a string', () => {
+
+      const action = { id: randomStringId(), type: 123, value: {} };
+      const seqReducer = getSequenceReducer(REQ_SEQ);
+      // $FlowFixMe
+      const newState = seqReducer(MOCK_INITIAL_STATE, action, {
+        [REQUEST]: mockRequestReducer,
+        [SUCCESS]: mockSuccessReducer,
+        [FAILURE]: mockFailureReducer,
+        [FINALLY]: mockFinallyReducer
+      });
+
+      expect(newState).toBe(MOCK_INITIAL_STATE);
+      expect(mockRequestReducer).not.toHaveBeenCalled();
+      expect(mockSuccessReducer).not.toHaveBeenCalled();
+      expect(mockFailureReducer).not.toHaveBeenCalled();
+      expect(mockFinallyReducer).not.toHaveBeenCalled();
     });
 
     test('should return given state if sub-reducer action type does not match', () => {
