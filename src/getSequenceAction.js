@@ -26,7 +26,6 @@ export default function getSequenceAction<V>(id :string, type :string, value ?:V
   };
 }
 
-
 export type {
   SequenceAction,
 };
