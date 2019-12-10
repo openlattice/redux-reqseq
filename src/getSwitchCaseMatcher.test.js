@@ -6,15 +6,13 @@ import getSwitchCaseMatcher from './getSwitchCaseMatcher';
 import { INVALID_SS_PARAMS } from './utils/invalid';
 import { randomStringId } from './utils/utils';
 
-function getMockActionCreator() {
-  return () => ({
-    id: randomStringId(),
-    type: '__TEST__',
-    value: {
-      id: randomStringId()
-    }
-  });
-}
+const MOCK_ACTION = 'MOCK_ACTION';
+const MOCK_ACTION_TYPES = {
+  REQUEST: `${MOCK_ACTION}/REQUEST`,
+  SUCCESS: `${MOCK_ACTION}/SUCCESS`,
+  FAILURE: `${MOCK_ACTION}/FAILURE`,
+  FINALLY: `${MOCK_ACTION}/FINALLY`,
+};
 
 describe('getSwitchCaseMatcher', () => {
 
@@ -23,13 +21,13 @@ describe('getSwitchCaseMatcher', () => {
   });
 
   test('invocation should return a function', () => {
-    expect(getSwitchCaseMatcher(randomStringId(), getMockActionCreator())).toBeInstanceOf(Function);
+    expect(getSwitchCaseMatcher(randomStringId(), MOCK_ACTION_TYPES)).toBeInstanceOf(Function);
   });
 
   test('should return the given base action type for invalid switch types', () => {
     INVALID_SS_PARAMS.forEach((invalid :any) => {
       const baseType = randomStringId();
-      const matcher = getSwitchCaseMatcher(baseType, getMockActionCreator());
+      const matcher = getSwitchCaseMatcher(baseType, MOCK_ACTION_TYPES);
       expect(matcher(invalid)).toEqual(baseType);
       expect(matcher(`${baseType}/${invalid}`)).toEqual(baseType);
     });
@@ -41,10 +39,10 @@ describe('getSwitchCaseMatcher', () => {
     const subType = randomStringId();
     const switchType = `${baseType}/${subType}`;
 
-    const mockActionCreator = getMockActionCreator();
-    mockActionCreator[subType] = switchType;
+    const mockActionTypes = { ...MOCK_ACTION_TYPES };
+    mockActionTypes[subType] = switchType;
 
-    const matcher = getSwitchCaseMatcher(baseType, mockActionCreator);
+    const matcher = getSwitchCaseMatcher(baseType, mockActionTypes);
     expect(matcher(switchType)).toEqual(switchType);
     expect(matcher(`__TEST__/${subType}`)).toEqual(baseType);
     expect(matcher(`${baseType}/__TEST__`)).toEqual(baseType);

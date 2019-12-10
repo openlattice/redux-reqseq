@@ -93,8 +93,8 @@ describe('newRequestSequence', () => {
 
     const reqseq1 :RequestSequence = newRequestSequence(REQ_SEQ);
     const reqseq2 :RequestSequence = newRequestSequence(REQ_SEQ);
-    const action1 :SequenceAction = reqseq1();
-    const action2 :SequenceAction = reqseq2();
+    const action1 :SequenceAction<> = reqseq1();
+    const action2 :SequenceAction<> = reqseq2();
 
     test('initial SequenceAcion ids must be different', () => {
       expect(action1.id).not.toEqual(action2.id);
@@ -129,7 +129,7 @@ describe('newRequestSequence', () => {
   describe('SequenceAcion objects should have the same id for actions within the sequence lifecycle', () => {
 
     const reqseq :RequestSequence = newRequestSequence(REQ_SEQ);
-    const action :SequenceAction = reqseq();
+    const action :SequenceAction<> = reqseq();
 
     test('request() SequenceAcion id must be the same', () => {
       const requestAction = reqseq.request(action.id);
@@ -188,7 +188,7 @@ describe('newRequestSequence', () => {
   describe('sequence lifecycle actions cannot be called multiple times', () => {
 
     const reqseq :RequestSequence = newRequestSequence(REQ_SEQ);
-    const action :SequenceAction = reqseq();
+    const action :SequenceAction<> = reqseq();
 
     test('request() SequenceAcion should throw if called a second time', () => {
       expect(() => reqseq.request(action.id)).not.toThrow();
@@ -215,7 +215,7 @@ describe('newRequestSequence', () => {
   describe('finally() should complete a sequence and clean up', () => {
 
     const reqseq :RequestSequence = newRequestSequence(REQ_SEQ);
-    const action :SequenceAction = reqseq();
+    const action :SequenceAction<> = reqseq();
 
     test('sequences should be deleted after finally() has been called', () => {
       expect(() => reqseq.finally(action.id)).not.toThrow();

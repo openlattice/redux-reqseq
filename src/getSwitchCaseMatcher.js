@@ -2,34 +2,34 @@
  * @flow
  */
 
-import { STRING_TAG } from './utils/utils';
-import type { SequenceActionCreator } from './getSequenceAction';
+import { isNonEmptyString } from './utils/utils';
 
 type SwitchCaseMatcher = (type :string) => string;
-
-function isValidType(value :any) :boolean {
-
-  return Object.prototype.toString.call(value) === STRING_TAG && value.length > 0;
-}
+type RequestSequenceActionTypes = {|
+  REQUEST :string;
+  SUCCESS :string;
+  FAILURE :string;
+  FINALLY :string;
+|};
 
 export default function getSwitchCaseMatcher(
   baseType :string,
-  actionCreator :SequenceActionCreator
+  actionTypes :RequestSequenceActionTypes,
 ) :SwitchCaseMatcher {
 
   return (switchType :string) :string => {
 
-    if (!isValidType(switchType)) {
+    if (!isNonEmptyString(switchType)) {
       return baseType;
     }
 
-    let subType :string = '';
     const slashIndex :number = switchType.lastIndexOf('/');
     if (slashIndex > 0 && slashIndex < switchType.length) {
-      subType = switchType.substring(slashIndex + 1);
+      const actionType = switchType.substring(slashIndex + 1);
+      return (actionTypes[actionType] === switchType) ? switchType : baseType;
     }
 
-    return (actionCreator[subType] === switchType) ? switchType : baseType;
+    return baseType;
   };
 }
 

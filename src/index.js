@@ -4,10 +4,9 @@
 
 import RequestStates from './RequestStates';
 import newRequestSequence from './newRequestSequence';
-
 import type { RequestState } from './RequestStates';
 import type { SequenceAction } from './getSequenceAction';
-import type { RequestSequence } from './newRequestSequence';
+import type { RequestSequence } from './types';
 
 // injected by Webpack.DefinePlugin
 declare var __VERSION__ :string;

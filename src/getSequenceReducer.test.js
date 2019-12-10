@@ -3,18 +3,17 @@
  */
 
 import getSequenceReducer from './getSequenceReducer';
-import { randomStringId } from './utils/utils';
 import {
-  REQUEST,
-  SUCCESS,
   FAILURE,
   FINALLY,
+  REQUEST,
+  SUCCESS,
 } from './ActionTypes';
-
 import {
   testShouldInvokeCorrectSubReducer,
   testShouldThrowOnInvalidSubReducer,
 } from './utils/tests';
+import { randomStringId } from './utils/utils';
 
 const REQ_SEQ :'REQ_SEQ' = 'REQ_SEQ';
 

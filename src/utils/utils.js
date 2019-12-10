@@ -12,7 +12,13 @@ function randomStringId() :string {
   return Math.random().toString(36).slice(2) + (new Date()).getTime().toString(36);
 }
 
+function isNonEmptyString(value :any) :boolean %checks {
+
+  return Object.prototype.toString.call(value) === STRING_TAG && value.length > 0;
+}
+
 export {
   STRING_TAG,
+  isNonEmptyString,
   randomStringId,
 };

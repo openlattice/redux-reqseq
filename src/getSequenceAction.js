@@ -2,15 +2,14 @@
  * @flow
  */
 
-type SequenceAction = {
+// "<V :mixed = {}>" means V defaults to type "{}", which seems to allow us to do ":SequenceAction<>"
+type SequenceAction<SequenceActionValue :mixed = {}> = {|
   +id :string;
   +type :string;
-  value :any;
-};
+  value :SequenceActionValue;
+|};
 
-type SequenceActionCreator = (...args :any[]) => SequenceAction;
-
-export default function getSequenceAction(id :string, type :string, value :any) :SequenceAction {
+export default function getSequenceAction<V>(id :string, type :string, value ?:V) :SequenceAction<V | {}> {
 
   if (value === null || value === undefined) {
     return {
@@ -26,6 +25,8 @@ export default function getSequenceAction(id :string, type :string, value :any) 
     value,
   };
 }
+
+type SequenceActionCreator = <V>(id :string, value :V) => SequenceAction<V>;
 
 export type {
   SequenceAction,

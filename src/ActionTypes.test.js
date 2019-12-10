@@ -3,10 +3,10 @@
  */
 
 import {
-  REQUEST,
-  SUCCESS,
   FAILURE,
   FINALLY,
+  REQUEST,
+  SUCCESS,
 } from './ActionTypes';
 
 const REQUEST_ACTION_TYPE :'REQUEST' = 'REQUEST';

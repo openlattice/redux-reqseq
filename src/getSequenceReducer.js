@@ -3,12 +3,11 @@
  */
 
 import {
+  FAILURE,
+  FINALLY,
   REQUEST,
   SUCCESS,
-  FAILURE,
-  FINALLY
 } from './ActionTypes';
-import type { SequenceAction } from './getSequenceAction';
 
 type SubReducers = {
   REQUEST ?:() => any;
@@ -17,13 +16,26 @@ type SubReducers = {
   FINALLY ?:() => any;
 };
 
-type SequenceReducer = (state :any, action :SequenceAction, subReducers :SubReducers) => any;
+type SequenceReducer = (state :any, action :{ type :string }, subReducers :SubReducers) => any;
+
+type ActionOrActionType =
+  | string
+  | { type :string; };
 
 export default function getSequenceReducer(baseType :string) :SequenceReducer {
 
-  return (state :any, action :SequenceAction, subReducers :SubReducers) :any => {
+  // "actionOrActionType" is for backwards compatibility
+  return (state :any, actionOrActionType :ActionOrActionType, subReducers :SubReducers) :any => {
 
-    if (action.type === `${baseType}/${REQUEST}`) {
+    let actionType :string = '';
+    if (typeof actionOrActionType === 'string') {
+      actionType = actionOrActionType;
+    }
+    else if (typeof actionOrActionType.type === 'string') {
+      actionType = actionOrActionType.type;
+    }
+
+    if (actionType === `${baseType}/${REQUEST}`) {
       const requestReducer = subReducers[REQUEST];
       if (requestReducer !== null && requestReducer !== undefined) {
         if (typeof requestReducer === 'function') {
@@ -32,7 +44,7 @@ export default function getSequenceReducer(baseType :string) :SequenceReducer {
         throw new Error(`RequestSequence: ${REQUEST} reducer must be a function.`);
       }
     }
-    else if (action.type === `${baseType}/${SUCCESS}`) {
+    else if (actionType === `${baseType}/${SUCCESS}`) {
       const successReducer = subReducers[SUCCESS];
       if (successReducer !== null && successReducer !== undefined) {
         if (typeof successReducer === 'function') {
@@ -41,7 +53,7 @@ export default function getSequenceReducer(baseType :string) :SequenceReducer {
         throw new Error(`RequestSequence: ${SUCCESS} reducer must be a function.`);
       }
     }
-    else if (action.type === `${baseType}/${FAILURE}`) {
+    else if (actionType === `${baseType}/${FAILURE}`) {
       const failureReducer = subReducers[FAILURE];
       if (failureReducer !== null && failureReducer !== undefined) {
         if (typeof failureReducer === 'function') {
@@ -50,7 +62,7 @@ export default function getSequenceReducer(baseType :string) :SequenceReducer {
         throw new Error(`RequestSequence: ${FAILURE} reducer must be a function.`);
       }
     }
-    else if (action.type === `${baseType}/${FINALLY}`) {
+    else if (actionType === `${baseType}/${FINALLY}`) {
       const finallyReducer = subReducers[FINALLY];
       if (finallyReducer !== null && finallyReducer !== undefined) {
         if (typeof finallyReducer === 'function') {

@@ -5,66 +5,47 @@
 import getSequenceAction from './getSequenceAction';
 import getSequenceReducer from './getSequenceReducer';
 import getSwitchCaseMatcher from './getSwitchCaseMatcher';
-import { STRING_TAG, randomStringId } from './utils/utils';
 import {
-  REQUEST,
-  SUCCESS,
   FAILURE,
   FINALLY,
+  REQUEST,
+  SUCCESS,
 } from './ActionTypes';
+import { isNonEmptyString, randomStringId } from './utils/utils';
 import type { SequenceAction, SequenceActionCreator } from './getSequenceAction';
-import type { SwitchCaseMatcher } from './getSwitchCaseMatcher';
-import type { SequenceReducer } from './getSequenceReducer';
-
-type RequestSequence = {
-  REQUEST :string;
-  SUCCESS :string;
-  FAILURE :string;
-  FINALLY :string;
-  (...args :any[]) :SequenceAction;
-  request :SequenceActionCreator;
-  success :SequenceActionCreator;
-  failure :SequenceActionCreator;
-  finally :SequenceActionCreator;
-  baseType :string;
-  case :SwitchCaseMatcher;
-  reducer :SequenceReducer;
-};
+import type { RequestSequence } from './types';
 
 /*
  * TODO: need logger
  */
 
-function isValidId(value :any) :boolean {
-
-  return Object.prototype.toString.call(value) === STRING_TAG && value.length > 0;
-}
-
 export default function newRequestSequence(baseType :string) :RequestSequence {
 
-  const requestSequenceActionType :string = `${baseType}/${REQUEST}`.toUpperCase();
-  const successSequenceActionType :string = `${baseType}/${SUCCESS}`.toUpperCase();
-  const failureSequenceActionType :string = `${baseType}/${FAILURE}`.toUpperCase();
-  const finallySequenceActionType :string = `${baseType}/${FINALLY}`.toUpperCase();
+  const sequences = {};
+  const rsActionTypes = {
+    [REQUEST]: `${baseType}/${REQUEST}`.toUpperCase(),
+    [SUCCESS]: `${baseType}/${SUCCESS}`.toUpperCase(),
+    [FAILURE]: `${baseType}/${FAILURE}`.toUpperCase(),
+    [FINALLY]: `${baseType}/${FINALLY}`.toUpperCase(),
+  };
 
-  const sequences :{[key :string] :Object} = {};
-
-  const triggerActionCreator :RequestSequence = (triggerValue :any) :SequenceAction => {
+  const requestSequence = <V>(triggerValue ?:V) :SequenceAction<V> => {
     const id :string = randomStringId();
     sequences[id] = {
       requestCalled: false,
       successCalled: false,
       failureCalled: false,
-      request: (requestValue :any) => getSequenceAction(id, requestSequenceActionType, requestValue),
-      success: (successValue :any) => getSequenceAction(id, successSequenceActionType, successValue),
-      failure: (failureValue :any) => getSequenceAction(id, failureSequenceActionType, failureValue),
-      finally: (finallyValue :any) => getSequenceAction(id, finallySequenceActionType, finallyValue)
+      request: <RequestValue>(value ?:RequestValue) => getSequenceAction(id, rsActionTypes[REQUEST], value),
+      success: <SuccessValue>(value ?:SuccessValue) => getSequenceAction(id, rsActionTypes[SUCCESS], value),
+      failure: <FailureValue>(value ?:FailureValue) => getSequenceAction(id, rsActionTypes[FAILURE], value),
+      finally: <FinallyValue>(value ?:FinallyValue) => getSequenceAction(id, rsActionTypes[FINALLY], value),
     };
+    // $FlowFixMe
     return getSequenceAction(id, baseType, triggerValue);
   };
 
-  const requestActionCreator :SequenceActionCreator = (id :string, value :any) :SequenceAction => {
-    if (!isValidId(id) || !sequences[id]) {
+  const requestActionCreator :SequenceActionCreator = <V>(id :string, value :V) :SequenceAction<V> => {
+    if (!isNonEmptyString(id) || !sequences[id]) {
       throw new Error('request() has been called with an invalid id');
     }
     if (sequences[id].requestCalled === true) {
@@ -74,8 +55,8 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
     return sequences[id].request(value);
   };
 
-  const successActionCreator :SequenceActionCreator = (id :string, value :any) :SequenceAction => {
-    if (!isValidId(id) || !sequences[id]) {
+  const successActionCreator :SequenceActionCreator = <V>(id :string, value :V) :SequenceAction<V> => {
+    if (!isNonEmptyString(id) || !sequences[id]) {
       throw new Error('success() has been called with an invalid id');
     }
     if (sequences[id].successCalled === true) {
@@ -85,8 +66,8 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
     return sequences[id].success(value);
   };
 
-  const failureActionCreator :SequenceActionCreator = (id :string, value :any) :SequenceAction => {
-    if (!isValidId(id) || !sequences[id]) {
+  const failureActionCreator :SequenceActionCreator = <V>(id :string, value :V) :SequenceAction<V> => {
+    if (!isNonEmptyString(id) || !sequences[id]) {
       throw new Error('failure() has been called with an invalid id');
     }
     if (sequences[id].failureCalled === true) {
@@ -96,8 +77,8 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
     return sequences[id].failure(value);
   };
 
-  const finallyActionCreator :SequenceActionCreator = (id :string, value :any) :SequenceAction => {
-    if (!isValidId(id) || !sequences[id]) {
+  const finallyActionCreator :SequenceActionCreator = <V>(id :string, value :V) :SequenceAction<V> => {
+    if (!isNonEmptyString(id) || !sequences[id]) {
       throw new Error('finally() has been called with an invalid id');
     }
     const sequence = sequences[id];
@@ -105,21 +86,22 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
     return sequence.finally(value);
   };
 
-  triggerActionCreator.REQUEST = requestSequenceActionType;
-  triggerActionCreator.SUCCESS = successSequenceActionType;
-  triggerActionCreator.FAILURE = failureSequenceActionType;
-  triggerActionCreator.FINALLY = finallySequenceActionType;
+  requestSequence.REQUEST = rsActionTypes[REQUEST];
+  requestSequence.SUCCESS = rsActionTypes[SUCCESS];
+  requestSequence.FAILURE = rsActionTypes[FAILURE];
+  requestSequence.FINALLY = rsActionTypes[FINALLY];
 
-  triggerActionCreator.request = requestActionCreator;
-  triggerActionCreator.success = successActionCreator;
-  triggerActionCreator.failure = failureActionCreator;
-  triggerActionCreator.finally = finallyActionCreator;
+  requestSequence.request = requestActionCreator;
+  requestSequence.success = successActionCreator;
+  requestSequence.failure = failureActionCreator;
+  requestSequence.finally = finallyActionCreator;
 
-  triggerActionCreator.baseType = baseType;
-  triggerActionCreator.case = getSwitchCaseMatcher(baseType, triggerActionCreator);
-  triggerActionCreator.reducer = getSequenceReducer(baseType);
+  requestSequence.baseType = baseType;
+  requestSequence.case = getSwitchCaseMatcher(baseType, rsActionTypes);
+  requestSequence.reducer = getSequenceReducer(baseType);
 
-  return triggerActionCreator;
+  // $FlowFixMe
+  return requestSequence;
 }
 
 export type {
