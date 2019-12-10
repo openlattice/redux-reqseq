@@ -44,7 +44,7 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
     return getSequenceAction(id, baseType, triggerValue);
   };
 
-  const requestActionCreator :SequenceActionCreator = <V>(id :string, value :V) :SequenceAction<V> => {
+  const requestActionCreator :SequenceActionCreator = <V>(id :string, value ?:V) :SequenceAction<V> => {
     if (!isNonEmptyString(id) || !sequences[id]) {
       throw new Error('request() has been called with an invalid id');
     }
@@ -55,7 +55,7 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
     return sequences[id].request(value);
   };
 
-  const successActionCreator :SequenceActionCreator = <V>(id :string, value :V) :SequenceAction<V> => {
+  const successActionCreator :SequenceActionCreator = <V>(id :string, value ?:V) :SequenceAction<V> => {
     if (!isNonEmptyString(id) || !sequences[id]) {
       throw new Error('success() has been called with an invalid id');
     }
@@ -66,7 +66,7 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
     return sequences[id].success(value);
   };
 
-  const failureActionCreator :SequenceActionCreator = <V>(id :string, value :V) :SequenceAction<V> => {
+  const failureActionCreator :SequenceActionCreator = <V>(id :string, value ?:V) :SequenceAction<V> => {
     if (!isNonEmptyString(id) || !sequences[id]) {
       throw new Error('failure() has been called with an invalid id');
     }
@@ -77,7 +77,7 @@ export default function newRequestSequence(baseType :string) :RequestSequence {
     return sequences[id].failure(value);
   };
 
-  const finallyActionCreator :SequenceActionCreator = <V>(id :string, value :V) :SequenceAction<V> => {
+  const finallyActionCreator :SequenceActionCreator = <V>(id :string, value ?:V) :SequenceAction<V> => {
     if (!isNonEmptyString(id) || !sequences[id]) {
       throw new Error('finally() has been called with an invalid id');
     }
