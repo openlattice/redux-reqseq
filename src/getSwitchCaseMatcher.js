@@ -19,14 +19,12 @@ export default function getSwitchCaseMatcher(
 
   return (switchType :string) :string => {
 
-    if (!isNonEmptyString(switchType)) {
-      return baseType;
-    }
-
-    const slashIndex :number = switchType.lastIndexOf('/');
-    if (slashIndex > 0 && slashIndex < switchType.length) {
-      const actionType = switchType.substring(slashIndex + 1);
-      return (actionTypes[actionType] === switchType) ? switchType : baseType;
+    if (isNonEmptyString(switchType)) {
+      const slashIndex :number = switchType.lastIndexOf('/');
+      if (slashIndex > 0 && slashIndex < switchType.length) {
+        const actionType = switchType.substring(slashIndex + 1);
+        return (actionTypes[actionType] === switchType) ? switchType : baseType;
+      }
     }
 
     return baseType;
