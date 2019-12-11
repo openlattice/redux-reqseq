@@ -16,9 +16,11 @@ type SubReducers = {
   FINALLY ?:() => any;
 };
 
-type ActionOrActionType =
-  | string
-  | { type :string; };
+type Action = {
+  type :string;
+};
+type ActionType = string;
+type ActionOrActionType = Action | ActionType;
 
 type SequenceReducer = (state :any, action :ActionOrActionType, subReducers :SubReducers) => any;
 
