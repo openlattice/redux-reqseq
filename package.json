@@ -34,7 +34,7 @@
     "@babel/preset-env": "~7.8.0",
     "@babel/preset-flow": "~7.8.0",
     "@babel/register": "~7.8.0",
-    "@babel/runtime": "~7.8.0",
+    "@babel/runtime": "~7.9.2",
     "babel-eslint": "~10.1.0",
     "babel-jest": "~24.8.0",
     "babel-loader": "~8.1.0",
@@ -56,7 +56,7 @@
   },
   "peerDependencies": {
     "@babel/polyfill": "~7.8.0",
-    "@babel/runtime": "~7.8.0"
+    "@babel/runtime": "~7.9.2"
   },
   "scripts": {
     "build:dev": "webpack --config config/webpack/webpack.config.js --env.development",
