@@ -1,35 +1,46 @@
-/* eslint-disable import/extensions */
+/* eslint-disable import/extensions, import/no-extraneous-dependencies */
 
 const path = require('path');
-const Webpack = require('webpack');
+const webpack = require('webpack');
+const externals = require('webpack-node-externals');
+const TerserPlugin = require('terser-webpack-plugin');
 
-const LIB_CONFIG = require('../lib/lib.config.js');
-const LIB_PATHS = require('../lib/paths.config.js');
 const PACKAGE = require('../../package.json');
+
+const BANNER = `
+${PACKAGE.name} - v${PACKAGE.version}
+${PACKAGE.description}
+${PACKAGE.homepage}
+
+Copyright (c) 2017-${(new Date()).getFullYear()}, OpenLattice, Inc. All rights reserved.
+`;
 
 module.exports = (webpackEnvironment) => {
 
   const env = webpackEnvironment || {};
 
-  /*
-   * constants
-   */
+  //
+  // constants
+  //
 
   const BABEL_CONFIG = path.resolve(__dirname, '../babel/babel.config.js');
   const ENV_DEV = 'development';
   const ENV_PROD = 'production';
-  const LIB_NAMESPACE = 'ReqSeq';
-  const LIB_FILE_NAME = 'index.js';
 
-  /*
-   * loaders
-   */
+  const ROOT = path.resolve(__dirname, '../..');
+  const BUILD = path.resolve(ROOT, 'build');
+  const NODE = path.resolve(ROOT, 'node_modules');
+  const SOURCE = path.resolve(ROOT, 'src');
+
+  //
+  // loaders
+  //
 
   const BABEL_LOADER = {
     test: /\.js$/,
     exclude: /node_modules/,
     include: [
-      LIB_PATHS.ABS.SOURCE,
+      SOURCE,
     ],
     use: {
       loader: 'babel-loader',
@@ -39,30 +50,39 @@ module.exports = (webpackEnvironment) => {
     },
   };
 
-  /*
-   * plugins
-   */
+  //
+  // plugins
+  //
 
-  const BANNER_PLUGIN = new Webpack.BannerPlugin({
-    banner: LIB_CONFIG.BANNER,
+  const BANNER_PLUGIN = new webpack.BannerPlugin({
+    banner: BANNER,
     entryOnly: true,
   });
 
-  const DEFINE_PLUGIN = new Webpack.DefinePlugin({
+  const DEFINE_PLUGIN = new webpack.DefinePlugin({
     __ENV_DEV__: JSON.stringify(!!env.development),
     __ENV_PROD__: JSON.stringify(!!env.production),
     __PACKAGE__: JSON.stringify(PACKAGE.name),
     __VERSION__: JSON.stringify(`v${PACKAGE.version}`),
   });
 
-  /*
-   * base webpack config
-   */
+  //
+  // base webpack config
+  //
 
   return {
     bail: true,
+    devtool: false,
     entry: [
-      LIB_PATHS.ABS.ENTRY,
+      path.resolve(ROOT, 'src/index.js'),
+    ],
+    externals: [
+      // https://github.com/liady/webpack-node-externals
+      externals({
+        allowlist: [
+          /babel/,
+        ],
+      }),
     ],
     mode: env.production ? ENV_PROD : ENV_DEV,
     module: {
@@ -72,13 +92,18 @@ module.exports = (webpackEnvironment) => {
     },
     optimization: {
       minimize: !!env.production,
+      minimizer: [
+        new TerserPlugin({
+          extractComments: false,
+        }),
+      ],
     },
     output: {
-      library: LIB_NAMESPACE,
+      filename: 'index.js',
+      library: 'ReqSeq',
       libraryTarget: 'umd',
-      path: LIB_PATHS.ABS.BUILD,
+      path: BUILD,
       publicPath: '/',
-      filename: LIB_FILE_NAME,
     },
     performance: {
       hints: false, // disable performance hints for now
@@ -90,8 +115,8 @@ module.exports = (webpackEnvironment) => {
     resolve: {
       extensions: ['.js'],
       modules: [
-        LIB_PATHS.ABS.SOURCE,
-        LIB_PATHS.ABS.NODE,
+        SOURCE,
+        NODE,
       ]
     },
     target: 'web',
