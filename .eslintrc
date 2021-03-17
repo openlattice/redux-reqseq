@@ -1,17 +1,18 @@
 {
-  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "jest": true
+  },
   "extends": [
     "airbnb-base",
     "plugin:flowtype/recommended"
   ],
+  "parser": "babel-eslint",
   "plugins": [
     "flowtype",
+    "import",
     "jest"
   ],
-  "env": {
-    "browser": true,
-    "jest": true,
-  },
   "settings": {
     "flowtype": {
       "onlyFilesWithFlowAnnotation": true
@@ -23,7 +24,7 @@
     }
   },
   "rules": {
-    "arrow-body-style": ["error", "as-needed"],
+    "arrow-body-style": ["warn", "as-needed"],
     "brace-style": ["error", "stroustrup"],
     "comma-dangle": ["error", "only-multiline"],
     "function-paren-newline": ["error", "consistent"],
@@ -43,6 +44,7 @@
       }
     ],
     "lines-between-class-members": "off",
+    "max-classes-per-file": "off",
     "max-len": [
       "error",
       {
@@ -67,6 +69,7 @@
           "OrderedList",
           "Map",
           "OrderedMap",
+          "Seq",
           "Set",
           "OrderedSet",
           "SortableContainer",
@@ -76,7 +79,14 @@
     ],
     "padded-blocks": "off",
     "prefer-destructuring": "warn",
-    "space-before-function-paren": ["error", "never"],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
 
     "flowtype/define-flow-type": "error",
     "flowtype/space-after-type-colon": ["error", "never"],
@@ -88,6 +98,7 @@
       {
         "devDependencies": [
           "config/**",
+          "src/utils/testing/**",
           "**/*.test.js"
         ]
       }
@@ -98,7 +109,6 @@
         "groups": ["builtin", "external", "internal", ["parent", "sibling"], "index"]
       }
     ],
-
     "import/prefer-default-export": "warn",
 
     "jest/no-disabled-tests": "error",
