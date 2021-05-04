@@ -24,7 +24,7 @@
   "license": "Apache-2.0",
   "main": "build/index.js",
   "dependencies": {
-    "@babel/runtime-corejs3": "~7.13.10"
+    "@babel/runtime-corejs3": "~7.14.0"
   },
   "devDependencies": {
     "@babel/cli": "~7.13.10",
@@ -54,7 +54,7 @@
     "webpack-node-externals": "~3.0.0"
   },
   "peerDependencies": {
-    "@babel/runtime-corejs3": "~7.13.10"
+    "@babel/runtime-corejs3": "~7.14.0"
   },
   "scripts": {
     "build:dev": "webpack --config config/webpack/webpack.config.js --env development",
