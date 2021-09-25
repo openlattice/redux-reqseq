@@ -24,6 +24,7 @@ module.exports = {
     '<rootDir>/flow-typed/',
   ],
   rootDir: '../..',
+  jestEnvironment: 'jsdom',
   testURL: 'http://localhost',
   transform: {
     '^.+\\.jsx?$': '<rootDir>/config/jest/babelJestTransformer.js',
